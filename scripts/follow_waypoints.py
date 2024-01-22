@@ -126,7 +126,7 @@ class FollowPath(State):
             self.client.wait_for_result()
 
             if index == 0:
-                rospy.loginfo("Wating to receive foods")
+                rospy.loginfo("Waiting to receive foods")
                 rospy.sleep(5)
             elif index != waypoints.index(len(waypoints)):
                 rospy.loginfo("Served food at %d table" %(index + 1))
