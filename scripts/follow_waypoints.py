@@ -119,8 +119,12 @@ class FollowPath(State):
             goal.target_pose.pose.position = waypoint.pose.pose.position
             goal.target_pose.pose.orientation = waypoint.pose.pose.orientation
 
-            rospy.loginfo("Executing move_base goal to position (x, y): %s, %s" %
-                          (waypoint.pose.pose.position.x, waypoint.pose.pose.position.y))
+            if index == 0:
+                rospy.loginfo("Moving to receive foods")
+            elif index != waypoints.index(len(waypoints)):
+                rospy.loginfo("Moving to waypoint %d for serving food", index)
+            else :
+                rospy.loginfo("Coming back to wash the dishes")
             rospy.loginfo("To cancel the goal: 'rostopic pub -1 /move_base/cancel actionlib_msgs/GoalID -- {}'")
             self.client.send_goal(goal=goal)
             self.client.wait_for_result()
@@ -129,7 +133,7 @@ class FollowPath(State):
                 rospy.loginfo("Waiting to receive foods")
                 rospy.sleep(5)
             elif index != waypoints.index(len(waypoints)):
-                rospy.loginfo("Served food at %d table" %(index + 1))
+                rospy.loginfo("Served food at %d table", index)
                 rospy.sleep(2)
             else :
                 rospy.loginfo("Moved dishes")
