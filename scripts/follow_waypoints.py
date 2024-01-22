@@ -104,13 +104,14 @@ class FollowPath(State):
     def execute(self, userdata):
         global waypoints
         global starttime
+        i = 0
 
         localstarttime = time.time()
         localendtime = time.time()
         starttime = time.time()
 
         # Execute waypoints each in sequence
-        for i in waypoints:
+        for waypoint in waypoints:
             if waypoints == []: # Break if preempted
                 rospy.loginfo("The waypoint queue has been reset.")
                 break
@@ -120,8 +121,8 @@ class FollowPath(State):
             # Otherwise publish next waypoint as goal
             goal = MoveBaseGoal()
             goal.target_pose.header.frame_id = self.frame_id
-            goal.target_pose.pose.position = waypoints[i].pose.pose.position
-            goal.target_pose.pose.orientation = waypoints[i].pose.pose.orientation
+            goal.target_pose.pose.position = waypoint.pose.pose.position
+            goal.target_pose.pose.orientation = waypoint.pose.pose.orientation
 
             if i == 0:
                 rospy.loginfo("Moving to receive foods")
@@ -146,6 +147,8 @@ class FollowPath(State):
                 rospy.sleep(2)
             else :
                 rospy.loginfo("Moved dishes")
+
+            i += 1
         return 'success'
 
 ###############################################################################
