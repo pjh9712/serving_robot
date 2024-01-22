@@ -26,7 +26,7 @@ def talker():
     my_wp.header.frame_id = 'map'
 
     for i in range(len(wp_list)):
-        rospy.loginfo("Waypoint" + str(i))
+        rospy.loginfo("Waypoint " + str(i))
         quaternion = tf.transformations.quaternion_from_euler(wp_list[i][2], wp_list[i][3], wp_list[i][4])
         my_wp.pose.pose.position.x = wp_list[i][0]
         my_wp.pose.pose.position.y = wp_list[i][1]
