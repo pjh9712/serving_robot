@@ -25,7 +25,7 @@ class GetPath(State):
 
         # Create publsher to publish waypoints as pose array so that you can see them in rviz, etc.
         self.pose_array_publisher = rospy.Publisher('waypoints', PoseArray, queue_size=1)
-        self.custom_waypoint_topic = rospy.get_param('~custom_waypoints_topic', 'my_waypoints_list')
+        self.custom_waypoint_topic = rospy.get_param('~waypoints_topic', 'my_waypoints_list')
 
         # Start thread to listen for reset messages to clear the waypoint queue
         def wait_for_path_reset():
