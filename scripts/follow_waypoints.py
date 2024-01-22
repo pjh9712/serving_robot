@@ -3,6 +3,7 @@
 import threading
 import rospy
 import actionlib
+import time
 
 from smach import State, StateMachine
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
@@ -10,6 +11,8 @@ from geometry_msgs.msg import PoseArray, PoseWithCovarianceStamped
 from std_msgs.msg import Empty
 
 waypoints = []
+starttime = time.time()
+endtime = time.time()
 
 def convert_PoseWithCovarianceStamped_to_PoseArray(waypoints):
     """Used to publish waypoints as pose array so that you can see them in rviz, etc."""
@@ -49,6 +52,7 @@ class GetPath(State):
 
     def execute(self, userdata):
         global waypoints
+        global starttime, endtime
         self.initialize_path_queue()
         self.path_ready = False
 
