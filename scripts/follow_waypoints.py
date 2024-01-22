@@ -105,6 +105,8 @@ class FollowPath(State):
         global waypoints
         global starttime
 
+        localstarttime = time.time()
+        localendtime = time.time()
         starttime = time.time()
 
         # Execute waypoints each in sequence
@@ -112,6 +114,8 @@ class FollowPath(State):
             if waypoints == []: # Break if preempted
                 rospy.loginfo("The waypoint queue has been reset.")
                 break
+
+            localstarttime = time.time()
 
             # Otherwise publish next waypoint as goal
             goal = MoveBaseGoal()
@@ -129,11 +133,16 @@ class FollowPath(State):
             self.client.send_goal(goal=goal)
             self.client.wait_for_result()
 
+            localendtime = time.time()
+            rospy.loginfo("Local Runtime: {:.5f} sec".format(localendtime - localstarttime))
+
             if index == 0:
                 rospy.loginfo("Waiting to receive foods")
+                rospy.loginfo("Waiting 5 seconds")
                 rospy.sleep(5)
             elif index != waypoints.index(len(waypoints)):
                 rospy.loginfo("Served food at %d table", index)
+                rospy.loginfo("Waiting 2 seconds")
                 rospy.sleep(2)
             else :
                 rospy.loginfo("Moved dishes")
@@ -150,7 +159,7 @@ class PathComplete(State):
         endtime = time.time()
         rospy.loginfo("###############################")
         rospy.loginfo("##### REACHED FINISH GATE #####")
-        rospy.loginfo("##### Runtime: {:.5f}} #####".format(endtime - starttime))
+        rospy.loginfo("##### Runtime: {:.5f} sec #####".format(endtime - starttime))
         rospy.loginfo("###############################")
         return 'success'
 
