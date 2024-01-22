@@ -102,7 +102,7 @@ class FollowPath(State):
         global waypoints
 
         # Execute waypoints each in sequence
-        for waypoint in waypoints:
+        for index, waypoint in enumerate(waypoints):
             if waypoints == []: # Break if preempted
                 rospy.loginfo("The waypoint queue has been reset.")
                 break
@@ -119,10 +119,14 @@ class FollowPath(State):
             self.client.send_goal(goal=goal)
             self.client.wait_for_result()
 
-            if waypoint == waypoints.index(1):
+            if index == 0:
+                rospy.loginfo("Wating to receive foods")
                 rospy.sleep(5)
-            elif waypoint != waypoints.index(len(waypoints)):
+            elif index != waypoints.index(len(waypoints)):
+                rospy.loginfo("Served food at %d table" %(index + 1))
                 rospy.sleep(2)
+            else :
+                rospy.loginfo("Moved dishes")
         return 'success'
 
 ###############################################################################
