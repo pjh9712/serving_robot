@@ -8,7 +8,11 @@ from std_msgs.msg import Empty
 from geometry_msgs.msg import PoseWithCovarianceStamped
 
 # wp_id : (x, y)
-wp_list = {}
+wp_list = {1 : (0.4, -0.7, 0.0, 0.0, 0.0),
+           2 : (5.0, -4.5, 0.0, 0.0, 1.6),
+           3 : (-6.3, -3.88, 0.0, 0.0, 1.6),
+           4 : (-12.3, -0.25, 0.0, 0.0, 1.6),
+           5 : (-9, -0.35, 0.0, 0.0, 3.14)}
 
 def talker():
     pub_wp = rospy.Publisher('my_t3_waypoints', PoseWithCovarianceStamped, queue_size=1)
