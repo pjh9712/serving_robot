@@ -20,12 +20,14 @@
     </include> -->
 
     <arg name="model" default="burger" doc="model type [burger, waffle]"/>
-    <arg name="urdf_file" default="$(find xacro)/xacro '$(find final_project)/urdf/turtlebot3_$(arg model).urdf.xacro'" />
-    <param name="robot_description" command="$(arg urdf_file)" />
+    <param name="robot_description" command="$(find xacro)/xacro $(find_project)/urdf/turtlebot3_$(arg model).urdf.xacro" />
     <arg name="model" value="$(arg model)" />
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
         <param name="publish_frequency" type="double" value="10.0" />
     </node>
 
-
+    <!-- TF Broadcast -->
+    <node pkg="tf" type="static_transform_publisher" name="static_tf_node"
+    args="-2.0 -0.5 0 0 0 0 map odom 30">
+    </node>
 </launch>
