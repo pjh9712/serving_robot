@@ -25,11 +25,11 @@ def talker():
     my_wp.header.stamp = rospy.Time.now()
     my_wp.header.frame_id = 'map'
 
-    init_x = -2.0
-    init_y = -0.5
-    init_roll = 0.0
-    init_pitch = 0.0
-    init_yaw = 0.0
+    init_x = -1.997662
+    init_y = -0.499985
+    init_roll = -0.000005
+    init_pitch = 0.000122
+    init_yaw = 0.010004
 
     quaternion = tf.transformations.quaternion_from_euler(init_roll, init_pitch, init_yaw)
 
