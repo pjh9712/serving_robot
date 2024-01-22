@@ -110,7 +110,7 @@ class FollowPath(State):
         starttime = time.time()
 
         # Execute waypoints each in sequence
-        for index, waypoint in enumerate(waypoints):
+        for i in waypoints:
             if waypoints == []: # Break if preempted
                 rospy.loginfo("The waypoint queue has been reset.")
                 break
@@ -120,13 +120,13 @@ class FollowPath(State):
             # Otherwise publish next waypoint as goal
             goal = MoveBaseGoal()
             goal.target_pose.header.frame_id = self.frame_id
-            goal.target_pose.pose.position = waypoint.pose.pose.position
-            goal.target_pose.pose.orientation = waypoint.pose.pose.orientation
+            goal.target_pose.pose.position = waypoints[i].pose.pose.position
+            goal.target_pose.pose.orientation = waypoints[i].pose.pose.orientation
 
-            if index == 0:
+            if i == 0:
                 rospy.loginfo("Moving to receive foods")
-            elif index != waypoints.index(len(waypoints)):
-                rospy.loginfo("Moving to waypoint %d for serving food", index)
+            elif i != len(waypoints):
+                rospy.loginfo("Moving to waypoint %d for serving food", i)
             else :
                 rospy.loginfo("Coming back to wash the dishes")
             rospy.loginfo("To cancel the goal: 'rostopic pub -1 /move_base/cancel actionlib_msgs/GoalID -- {}'")
@@ -136,12 +136,12 @@ class FollowPath(State):
             localendtime = time.time()
             rospy.loginfo("Local Runtime: {:.5f} sec".format(localendtime - localstarttime))
 
-            if index == 0:
+            if i == 0:
                 rospy.loginfo("Waiting to receive foods")
                 rospy.loginfo("Waiting 5 seconds")
                 rospy.sleep(5)
-            elif index != waypoints.index(len(waypoints)):
-                rospy.loginfo("Served food at %d table", index)
+            elif i != len(waypoints):
+                rospy.loginfo("Served food at %d table", i)
                 rospy.loginfo("Waiting 2 seconds")
                 rospy.sleep(2)
             else :
