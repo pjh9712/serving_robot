@@ -52,7 +52,6 @@ class GetPath(State):
 
     def execute(self, userdata):
         global waypoints
-        global starttime, endtime
         self.initialize_path_queue()
         self.path_ready = False
 
@@ -104,6 +103,9 @@ class FollowPath(State):
 
     def execute(self, userdata):
         global waypoints
+        global starttime
+
+        starttime = time.time()
 
         # Execute waypoints each in sequence
         for index, waypoint in enumerate(waypoints):
@@ -140,8 +142,11 @@ class PathComplete(State):
         State.__init__(self, outcomes=['success'])
 
     def execute(self, userdata):
+        global endtime
+        endtime = time.time()
         rospy.loginfo("###############################")
         rospy.loginfo("##### REACHED FINISH GATE #####")
+        rospy.loginfo("##### Runtime: {:.5f}} #####".format(endtime - starttime))
         rospy.loginfo("###############################")
         return 'success'
 
