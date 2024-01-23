@@ -43,9 +43,12 @@
     <arg name="odom_topic" default="odom" />
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
         <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
-        <rosparam file="$(find final_project)/param/1to2_global_costmap.yaml" command="load" />
-        <rosparam file="$(find final_project)/param/1to2_local_costmap.yaml" command="load" />
-        <rosparam file="$(find final_project)/param/1to2_planner.yaml" command="load" />
+
+        <rosparam file="$(find final_project)/param/costmap_common_params_$(arg model)_1to2.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find final_project)/param/costmap_common_params_$(arg model)_1to2.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find final_project)/param/move_base_params.yaml" command="load" />
+        <rosparam file="$(find final_project)/param/dwa_local_planner_params_1to2.yaml" command="load" />
+        <rosparam file="$(find final_project)/param/local_costmap_params_1to2.yaml" command="load" />
 
         <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
         <remap from="odom" to="$(arg odom_topic)"/>
