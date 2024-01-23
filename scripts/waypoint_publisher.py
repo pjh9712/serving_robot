@@ -8,7 +8,7 @@ from std_msgs.msg import Empty
 from geometry_msgs.msg import PoseWithCovarianceStamped
 
 # wp_id : (x, y)
-wp_list = {0 :(3.9, -0.44, 0.0, 0.0, 0.0),
+wp_list = {0 :(4.5, -0.44, 0.0, 0.0, 0.0),
            1 : (5.0, -4.5, 0.0, 0.0, 1.6),
            2 : (-6.3, -3.88, 0.0, 0.0, 1.6),
            3 : (-12.3, -0.25, 0.0, 0.0, 1.6),
