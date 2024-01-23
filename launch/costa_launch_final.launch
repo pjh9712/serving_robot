@@ -48,6 +48,7 @@
         <rosparam file="$(find final_project)/param/costmap_common_params_$(arg model)_1to2.yaml" command="load" ns="local_costmap" />
         <rosparam file="$(find final_project)/param/move_base_params.yaml" command="load" />
         <rosparam file="$(find final_project)/param/dwa_local_planner_params_1to2.yaml" command="load" />
+        <rosparam file="$(find final_project)/param/global_costmap_params_1to2.yaml" command="load" />
         <rosparam file="$(find final_project)/param/local_costmap_params_1to2.yaml" command="load" />
 
         <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
