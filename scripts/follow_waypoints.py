@@ -125,28 +125,28 @@ class FollowPath(State):
             goal.target_pose.pose.orientation = waypoint.pose.pose.orientation
 
             if i == 0:
-                rospy.loginfo("Moving to receive foods")
+                rospy.loginfo("[Moving to receive foods]")
             elif i != len(waypoints):
-                rospy.loginfo("Moving to waypoint %d for serving food", i)
+                rospy.loginfo("[Moving to waypoint %d for serving food]", i)
             else :
-                rospy.loginfo("Coming back to wash the dishes")
+                rospy.loginfo("[Coming back to wash the dishes]")
             rospy.loginfo("To cancel the goal: 'rostopic pub -1 /move_base/cancel actionlib_msgs/GoalID -- {}'")
             self.client.send_goal(goal=goal)
             self.client.wait_for_result()
 
             localendtime = time.time()
-            rospy.loginfo("Local Runtime: {:.5f} sec".format(localendtime - localstarttime))
+            rospy.loginfo("## Local Runtime: {:.5f}sec ##".format(localendtime - localstarttime))
 
             if i == 0:
-                rospy.loginfo("Waiting to receive foods")
+                rospy.loginfo("[Waiting to receive foods]")
                 rospy.loginfo("Waiting 5 seconds")
                 rospy.sleep(5)
             elif i != len(waypoints):
-                rospy.loginfo("Served food at %d table", i)
+                rospy.loginfo("[Served food at %d table]", i)
                 rospy.loginfo("Waiting 2 seconds")
                 rospy.sleep(2)
             else :
-                rospy.loginfo("Moved dishes")
+                rospy.loginfo("[Moved dishes]")
 
             i += 1
         return 'success'
@@ -162,7 +162,7 @@ class PathComplete(State):
         endtime = time.time()
         rospy.loginfo("###############################")
         rospy.loginfo("##### REACHED FINISH GATE #####")
-        rospy.loginfo("##### Runtime: {:.5f} sec #####".format(endtime - starttime))
+        rospy.loginfo("#### Runtime: {:.5f}sec ####".format(endtime - starttime))
         rospy.loginfo("###############################")
         return 'success'
 
