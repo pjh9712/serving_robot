@@ -26,9 +26,8 @@
     </node>
 
     <!-- TF Broadcast -->
-    <node pkg="tf" type="static_transform_publisher" name="static_tf_node"
-    args="-2.0 -0.5 0 0 0 0 map odom 30">
-    </node>
+    <!-- <node pkg="tf" type="static_transform_publisher" name="static_tf_node" args="-2.0 -0.5 0 0 0 0 map odom 30">
+    </node> -->
 
     <!-- Map Server Node -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(find final_project)/map/cafe.yaml" />
@@ -36,7 +35,8 @@
     <!-- AMCL -->
     <include file="$(find final_project)/config/amcl.launch.xml" />
 
-    <!-- Visulization -->
-    <node name="rviz" pkg="rviz" type="rviz"/>
+    <!-- Visualization -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find final_project)/rviz/amcl.rviz" />
+
 
 </launch>
