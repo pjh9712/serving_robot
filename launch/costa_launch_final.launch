@@ -55,5 +55,7 @@
         <remap from="odom" to="$(arg odom_topic)"/>
     </node>
 
-
+    <!-- Waypoint -->
+    <include file="$(find final_project)/launch/start_follow_waypoints.launch" />
+    <include file="$(find final_project)/launch/publish_waypoint.launch" />
 </launch>
