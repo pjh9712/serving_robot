@@ -126,7 +126,7 @@ class FollowPath(State):
 
             if i == 0:
                 rospy.loginfo("[Moving to receive foods]")
-            elif i != len(waypoints):
+            elif i < len(waypoints) - 1:
                 rospy.loginfo("[Moving to waypoint %d for serving food]", i)
             else :
                 rospy.loginfo("[Coming back to wash the dishes]")
@@ -141,8 +141,8 @@ class FollowPath(State):
                 rospy.loginfo("[Waiting to receive foods]")
                 rospy.loginfo("Waiting 5 seconds")
                 rospy.sleep(5)
-            elif i != len(waypoints):
-                rospy.loginfo("[Served food at %d table]", i)
+            elif i < len(waypoints) - 1:
+                rospy.loginfo("[Served food at table %d]", i)
                 rospy.loginfo("Waiting 2 seconds")
                 rospy.sleep(2)
             else :
@@ -162,7 +162,7 @@ class PathComplete(State):
         endtime = time.time()
         rospy.loginfo("###############################")
         rospy.loginfo("##### REACHED FINISH GATE #####")
-        rospy.loginfo("#### Runtime: {:.5f}sec ####".format(endtime - starttime))
+        rospy.loginfo("## Runtime: {:.5f}sec ##".format(endtime - starttime))
         rospy.loginfo("###############################")
         return 'success'
 
