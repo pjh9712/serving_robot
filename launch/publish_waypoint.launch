@@ -1,0 +1,3 @@
+<launch>
+    <node pkg='final_project' type='waypoint_publisher.py' name="waypoint_publisher" output="screen" />
+</launch>
