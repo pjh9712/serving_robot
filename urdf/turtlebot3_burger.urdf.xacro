@@ -36,7 +36,7 @@
     </inertial>
   </link>
 
-  <joint name="wheel_left_joint" type="continuous">
+  <joint name="wheel_left_joint" type="fixed">
     <parent link="base_link"/>
     <child link="wheel_left_link"/>
     <origin xyz="0.0 0.08 0.023" rpy="${-M_PI*0.5} 0 0"/>
@@ -68,7 +68,7 @@
     </inertial>
   </link>
 
-  <joint name="wheel_right_joint" type="continuous">
+  <joint name="wheel_right_joint" type="fixed">
     <parent link="base_link"/>
     <child link="wheel_right_link"/>
     <origin xyz="0.0 -0.08 0.023" rpy="${-M_PI*0.5} 0 0"/>
@@ -163,6 +163,6 @@
   </link>
 
 
-  <xacro:camera sensor_name="camera" parent_name="base_link" origin_xyz="0.015 0.0 0.09" camera_YAW="0.0"/> 
+  <xacro:camera sensor_name="camera" parent_name="base_link" origin_xyz="0.015 0.0 0.09" camera_YAW="0.0"/>
 
 </robot>
