@@ -1,0 +1,9 @@
+<launch>
+  <!-- Turtlebot3 -->
+  <include file="$(find final_project)/launch/turtlebot3_remote.launch" />
+
+  <!-- Gmapping -->
+  <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
+    <rosparam file="$(find final_project)/config/gmapping_params.yaml" command="load" />
+  </node>
+</launch>
