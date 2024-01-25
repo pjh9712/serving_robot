@@ -1,0 +1,48 @@
+<launch>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find final_project)/worlds/costa_coffee_mod.world"/>
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="true"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+        <arg name="verbose" value="true"/>
+    </include>
+
+    <arg name="model" default="burger" doc="model type [burger, waffle]"/>
+    <param name="robot_description" command="$(find xacro)/xacro $(find final_project)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+        <param name="publish_frequency" type="double" value="10.0" />
+    </node>
+
+    <!-- Map Server Node -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find final_project)/map/cafe.yaml" />
+
+    <!-- AMCL -->
+    <include file="$(find final_project)/config/amcl.launch.xml" />
+
+    <!-- Visualization -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find final_project)/rviz/amcl.rviz" />
+
+    <!-- move_base -->
+    <arg name="cmd_vel_topic" default="/cmd_vel" />
+    <arg name="odom_topic" default="odom" />
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+
+        <rosparam file="$(find final_project)/param/costmap_common_params_$(arg model)_1to2.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find final_project)/param/costmap_common_params_$(arg model)_1to2.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find final_project)/param/move_base_params.yaml" command="load" />
+        <rosparam file="$(find final_project)/param/dwa_local_planner_params_1to2.yaml" command="load" />
+        <rosparam file="$(find final_project)/param/global_costmap_params_1to2.yaml" command="load" />
+        <rosparam file="$(find final_project)/param/local_costmap_params_1to2.yaml" command="load" />
+
+        <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
+        <remap from="odom" to="$(arg odom_topic)"/>
+    </node>
+
+    <!-- Waypoint -->
+    <include file="$(find final_project)/launch/start_follow_waypoints.launch" />
+    <include file="$(find final_project)/launch/publish_waypoint.launch" />
+</launch>
